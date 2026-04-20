@@ -1,0 +1,535 @@
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
+import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe } from 'lucide-react';
+import React, { useRef, useState, useEffect } from 'react';
+
+function ParticleNetwork() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let animationFrameId: number;
+    let particles: {x: number, y: number, vx: number, vy: number, radius: number}[] = [];
+    
+    // Config
+    const particleCount = 80;
+    const connectionDistance = 150;
+    const mouseRadius = 200; // Antigravity area of effect
+    
+    let mouse = { x: -1000, y: -1000 };
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    };
+
+    const initParticles = () => {
+      particles = [];
+      for (let i = 0; i < particleCount; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          radius: Math.random() * 1.5 + 0.5
+        });
+      }
+    };
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update and draw particles
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        
+        // Boundaries
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+        
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Mouse interaction (Antigravity)
+        const dxMouse = mouse.x - p.x;
+        const dyMouse = mouse.y - p.y;
+        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        
+        if (distMouse < mouseRadius) {
+          const forceDirectionX = dxMouse / distMouse;
+          const forceDirectionY = dyMouse / distMouse;
+          const force = (mouseRadius - distMouse) / mouseRadius;
+          // Push particles away
+          p.x -= forceDirectionX * force * 5;
+          p.y -= forceDirectionY * force * 5;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(0, 229, 255, 0.4)';
+        ctx.fill();
+
+        // Connect particles
+        for (let j = i + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < connectionDistance) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(0, 229, 255, ${0.15 - dist/connectionDistance * 0.15})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.stroke();
+          }
+        }
+      }
+      
+      animationFrameId = requestAnimationFrame(draw);
+    };
+
+    window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+    
+    // Touch support
+    window.addEventListener('touchmove', (e) => {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    });
+
+    resize();
+    draw();
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', () => {});
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  return <canvas ref={canvasRef} className="absolute inset-0 z-0 pointer-events-auto" />;
+}
+
+function Navbar() {
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 mix-blend-difference px-6 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
+      <div className="text-xl font-display font-bold tracking-widest text-white">TIPAZO</div>
+      <a href="#contacto" className="text-sm font-medium tracking-wider uppercase border border-white/20 rounded-full px-5 py-2 hover:bg-white hover:text-black transition-colors duration-300">
+        Obtén la tuya
+      </a>
+    </nav>
+  );
+}
+
+function Hero() {
+  const { scrollY } = useScroll();
+  const y1 = useTransform(scrollY, [0, 1000], [0, 200]);
+  const y2 = useTransform(scrollY, [0, 1000], [0, -100]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0]);
+
+  return (
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 px-6">
+      {/* Dynamic Particle Background */}
+      <ParticleNetwork />
+      
+      {/* Background glowing orb with parallax */}
+      <motion.div 
+        style={{ y: y1 }}
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/10 rounded-full blur-[120px] pointer-events-none" 
+      />
+      
+      <motion.div 
+        style={{ y: y2, opacity }}
+        className="relative z-10 max-w-4xl mx-auto text-center space-y-8 pointer-events-none"
+      >
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/5 text-accent text-xs font-mono mb-6 uppercase tracking-widest pointer-events-auto shadow-[0_0_15px_rgba(0,229,255,0.2)]">
+            <Sparkles size={14} /> Tu marca en esteroides
+          </div>
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-bold tracking-tighter leading-[0.9] text-white mix-blend-plus-lighter">
+            LA ÚLTIMA <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-blue-400 to-accent bg-[length:200%_auto] animate-gradient">
+              TARJETA
+            </span> QUE <br />
+            NECESITARÁS.
+          </h1>
+        </motion.div>
+        
+        <motion.p 
+          className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed tracking-wide"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+        >
+          Perfiles digitales y tarjetas NFC/QR premium. Diseñadas a medida por especialistas. Nada genérico. Código de alto nivel para un perfil impecable.
+        </motion.p>
+        
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+          className="pointer-events-auto"
+        >
+          <a href="#contacto" className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-medium hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300">
+            Obtén tu tarjeta ahora <ArrowRight size={18} />
+          </a>
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}
+
+function SpinningCardSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, { damping: 20, stiffness: 100 });
+  const rotateY = useTransform(smoothProgress, [0, 1], [-60, 360]);
+  const rotateX = useTransform(smoothProgress, [0, 0.5, 1], [20, 0, -20]);
+  const scale = useTransform(smoothProgress, [0, 0.5, 1], [0.8, 1, 0.8]);
+
+  return (
+    <section ref={containerRef} className="h-[150vh] relative">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden px-6">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.05)_0%,transparent_70%)] pointer-events-none" />
+        
+        <div className="text-center mb-12 z-10">
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-4">Ingeniería y Conexión</h2>
+          <p className="text-slate-400 max-w-lg mx-auto">Una tarjeta de presentación hipertecnológica con chip NFC oculto. Simplemente acércala y comparte tu mundo.</p>
+        </div>
+
+        <div className="perspective-[1200px] w-full flex justify-center perspective-origin-center">
+          <motion.div
+            style={{ 
+              rotateY, 
+              rotateX,
+              scale,
+              transformStyle: "preserve-3d"
+            }}
+            className="relative w-64 h-96 md:w-80 md:h-[480px] rounded-[2rem] bg-gradient-to-tr from-slate-900 to-slate-800 border border-slate-700/50 shadow-2xl"
+          >
+            {/* Holographic effect */}
+            <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-tr from-accent/0 via-accent/10 to-accent/0 opacity-50 backface-hidden" />
+            
+            {/* Front of card */}
+            <div className="absolute inset-0 p-8 flex flex-col justify-between backface-hidden" style={{ transform: 'translateZ(1px)' }}>
+              <div className="flex justify-between items-start">
+                <div className="w-10 h-10 rounded-full bg-slate-700 mx-auto opacity-0" />
+                <div className="text-xl font-display tracking-widest text-slate-300">TIPAZO</div>
+              </div>
+              <div className="space-y-2">
+                <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center mb-4">
+                  <Cpu size={16} className="text-accent" />
+                </div>
+                <div className="text-xs text-slate-400 font-mono tracking-widest uppercase">Tap to connect</div>
+                <div className="text-lg font-medium tracking-wide">Juan Pérez</div>
+                <div className="text-sm text-slate-500">CEO & Founder</div>
+              </div>
+            </div>
+
+            {/* Back of card */}
+            <div className="absolute inset-0 p-8 flex flex-col items-center justify-center backface-hidden rounded-[2rem] bg-slate-900 border border-slate-700/50" style={{ transform: 'rotateY(180deg) translateZ(1px)' }}>
+               <div className="p-4 bg-white rounded-xl mb-6">
+                 {/* Mock QR Code Pattern */}
+                 <div className="w-32 h-32 bg-slate-100 grid grid-cols-4 grid-rows-4 gap-1 p-1">
+                    {Array.from({length: 16}).map((_, i) => (
+                      <div key={i} className={`bg-black ${Math.random() > 0.5 ? 'rounded-tl-md' : ''} ${Math.random() > 0.5 ? 'opacity-100' : 'opacity-0'}`} />
+                    ))}
+                 </div>
+               </div>
+               <div className="text-center font-mono text-xs text-slate-500 tracking-widest">TIPAZO.INFO</div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Features() {
+  const features = [
+    {
+      icon: <RefreshCcw size={24} className="text-accent" />,
+      title: "Tu información siempre al día",
+      description: "Edita, agrega o elimina información en cualquier momento. Tu perfil se actualiza al instante sin necesidad de imprimir una nueva tarjeta."
+    },
+    {
+      icon: <Globe size={24} className="text-accent" />,
+      title: "Dominio Marca Blanca",
+      description: "Tu perfil en tupagina.com/cliente o subdominios. Subes un solo archivo a tu hosting y nosotros manejamos la plataforma detrás."
+    },
+    {
+      icon: <PenTool size={24} className="text-accent" />,
+      title: "Diseño Especializado",
+      description: "No manejamos constructores genéricos. Un diseñador especialista crea tu perfil con todos tus datos importantes con estética impecable."
+    },
+    {
+      icon: <Cpu size={24} className="text-accent" />,
+      title: "Tecnología NFC Invisible",
+      description: "El chip está internamente integrado, siendo invisible al exterior. Un diseño limpio, minucioso y altamente tecnológico."
+    },
+    {
+      icon: <ShieldCheck size={24} className="text-accent" />,
+      title: "Calidad Premium",
+      description: "Hechas y diseñadas una por una. Nuestro proceso de impresión es supervisado de principio a fin para garantizar excelencia."
+    },
+    {
+      icon: <Leaf size={24} className="text-accent" />,
+      title: "Eco-Friendly",
+      description: "Reducimos el desperdicio y evitamos que tu tarjeta termine en la basura. Cientos de tarjetas de papel consolidadas en una obra de arte."
+    }
+  ];
+
+  return (
+    <section className="py-32 px-6 bg-dark-bg relative overflow-hidden">
+      {/* Background glow for features */}
+      <div className="absolute top-0 right-0 w-full h-[500px] bg-[radial-gradient(ellipse_at_top_right,rgba(0,229,255,0.03)_0%,transparent_50%)] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="mb-20 text-center max-w-3xl mx-auto">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="text-4xl md:text-5xl font-display font-medium tracking-tight mb-6"
+          >
+            Obsesión por los detalles.
+          </motion.h2>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ delay: 0.1 }}
+            className="text-slate-400 text-lg leading-relaxed"
+          >
+            No es solo una tarjeta, es tu identidad profesional condensada en una pieza de ingeniería premium. Despliega tecnología de punta cada vez que te presentes.
+          </motion.p>
+        </div>
+          
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {features.map((feature, i) => (
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: i * 0.1, duration: 0.5 }}
+              className="bg-dark-card border border-white/5 p-8 rounded-3xl hover:border-accent/40 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(0,229,255,0.05)] transition-all duration-300"
+            >
+              <div className="w-12 h-12 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 shadow-inner border border-accent/20">
+                {feature.icon}
+              </div>
+              <h3 className="text-lg font-display font-medium mb-3 text-white">{feature.title}</h3>
+              <p className="text-sm text-slate-400 leading-relaxed font-light">{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  const cases = [
+    { name: "Perfil Ejecutivo", category: "Finanzas", seed: "office" },
+    { name: "Portafolio Creativo", category: "Diseño", seed: "art" },
+    { name: "Tarjeta de Restaurante", category: "Gastronomía", seed: "food" },
+    { name: "Consultor Médico", category: "Salud", seed: "modern" },
+  ];
+
+  return (
+    <section className="py-32 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+          <div>
+            <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight">Obras de Arte de Contacto</h2>
+            <p className="text-slate-400 mt-4 max-w-md">Algunos de los perfiles y tarjetas que hemos diseñado meticulosamente para nuestros clientes.</p>
+          </div>
+          <a href="#contacto" className="text-sm uppercase tracking-widest text-accent hover:text-white transition-colors">Solicitar ejemplos →</a>
+        </div>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {cases.map((item, i) => (
+            <div key={i} className="group cursor-pointer">
+              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-4 bg-slate-900 border border-slate-800">
+                <img 
+                   src={`https://picsum.photos/seed/${item.seed}/600/800?blur=2`} 
+                   alt={item.name}
+                   referrerPolicy="no-referrer"
+                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/80 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6">
+                  <div className="text-xs uppercase tracking-widest text-accent mb-1">{item.category}</div>
+                  <div className="text-lg font-medium">{item.name}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PricingAndContact() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 5000);
+  };
+
+  return (
+    <section id="contacto" className="py-32 px-6 bg-dark-card border-t border-white/5 relative overflow-hidden">
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-accent/5 blur-[100px] pointer-events-none" />
+      
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 relative z-10">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-accent/30 bg-accent/5 text-accent text-xs font-mono mb-6 uppercase tracking-widest">
+            Inversión
+          </div>
+          <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tight mb-8">Nivel Premium, <br />Precio Transparente.</h2>
+          
+          <div className="mb-12">
+            <div className="flex items-baseline gap-2 mb-4">
+              <span className="text-5xl md:text-6xl font-bold font-display tracking-tighter">$1,000</span>
+              <span className="text-xl text-slate-400 font-mono">MXN</span>
+            </div>
+            <p className="text-slate-400 text-lg">Inversión única por un activo que revoluciona tu networking.</p>
+          </div>
+
+          <ul className="space-y-4 mb-12">
+            {[
+              "Diseño de perfil digital por especialista",
+              "Diseño de tarjeta física personalizada",
+              "Tarjeta física premium con chip NFC interno",
+              "Impresión de alta precisión con código QR",
+              "Supervisión del proceso de inicio a fin",
+              "Sin suscripciones ni costos ocultos"
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-300">
+                <Check className="text-accent shrink-0 mt-1" size={18} />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        
+        <div className="bg-dark-bg p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-2xl">
+          <h3 className="text-2xl font-display font-medium mb-6">Solicita tu cotización</h3>
+          <p className="text-slate-400 mb-8 text-sm">Déjanos tus datos y un especialista se pondrá en contacto contigo para comenzar a diseñar tu perfil.</p>
+          
+          {submitted ? (
+            <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
+              <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 text-accent">
+                <Check />
+              </div>
+              <h4 className="text-lg font-medium mb-2">¡Solicitud recibida!</h4>
+              <p className="text-sm text-slate-400">Nos pondremos en contacto contigo pronto.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Nombre Completo</label>
+                <input required type="text" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="Ej. Ana García" />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Correo Electrónico</label>
+                <input required type="email" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="ana@empresa.com" />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Teléfono (WhatsApp)</label>
+                <input required type="tel" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="+52 123 456 7890" />
+              </div>
+              <div>
+                <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Mensaje Adicional</label>
+                <textarea rows={3} className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600 resize-none" placeholder="Cuéntanos un poco sobre ti o tu empresa..."></textarea>
+              </div>
+              <button type="submit" className="w-full bg-white text-black font-medium rounded-xl px-4 py-4 mt-4 hover:bg-slate-200 transition-colors flex justify-center items-center gap-2">
+                Enviar Solicitud <Send size={16} />
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer className="border-t border-white/5 pt-16 pb-8 px-6 bg-dark-bg">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12 mb-16">
+        <div>
+          <div className="text-2xl font-display font-bold tracking-widest text-white mb-6">TIPAZO</div>
+          <p className="text-slate-400 text-sm leading-relaxed max-w-xs">
+            Perfiles digitales premium y tarjetas NFC. Diseñados a mano para los que no se conforman con lo genérico.
+          </p>
+        </div>
+        
+        <div>
+          <h4 className="text-sm font-medium tracking-widest uppercase mb-6">Contacto</h4>
+          <ul className="space-y-4">
+            <li className="flex items-start gap-3 text-slate-400 text-sm hover:text-white transition-colors">
+              <MapPin size={18} className="shrink-0 text-accent" />
+              <span>Guadalajara, México</span>
+            </li>
+            <li className="flex items-center gap-3 text-slate-400 text-sm hover:text-white transition-colors">
+              <Phone size={18} className="shrink-0 text-accent" />
+              <a href="tel:3322223518">33 2222 3518</a>
+            </li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 className="text-sm font-medium tracking-widest uppercase mb-6">Enlaces Rápidos</h4>
+          <ul className="space-y-3">
+            <li><a href="#" className="text-slate-400 text-sm hover:text-accent transition-colors">Inicio</a></li>
+            <li><a href="#contacto" className="text-slate-400 text-sm hover:text-accent transition-colors">Cómo Funciona</a></li>
+            <li><a href="#contacto" className="text-slate-400 text-sm hover:text-accent transition-colors">Cotizar</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 border-t border-white/5 pt-8 text-xs text-slate-500 font-mono uppercase tracking-widest">
+        <p>&copy; {new Date().getFullYear()} TIPAZO.INFO. Todos los derechos reservados.</p>
+        <p>Hecho con precisión.</p>
+      </div>
+    </footer>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="font-sans text-slate-200 antialiased selection:bg-accent/30 selection:text-white">
+      <Navbar />
+      <main>
+        <Hero />
+        <SpinningCardSection />
+        <Features />
+        <Gallery />
+        <PricingAndContact />
+      </main>
+      <Footer />
+    </div>
+  );
+}
