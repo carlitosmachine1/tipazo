@@ -535,10 +535,10 @@ function HostingOptions() {
 
 function Gallery() {
   const cases = [
-    { name: "Perfil Ejecutivo", category: "Finanzas", seed: "office" },
-    { name: "Portafolio Creativo", category: "Diseño", seed: "art" },
-    { name: "Tarjeta de Restaurante", category: "Gastronomía", seed: "food" },
-    { name: "Consultor Médico", category: "Salud", seed: "modern" },
+    { name: "Perfil Ejecutivo", category: "Tap a Teléfono", imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&h=800&q=80" },
+    { name: "Portafolio Creativo", category: "Perfil Digital", imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&h=800&q=80" },
+    { name: "Tarjeta de Restaurante", category: "Tarjeta Fina", imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&h=800&q=80" },
+    { name: "Consultor Médico", category: "Datos", imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=800&q=80" },
   ];
 
   return (
@@ -557,7 +557,7 @@ function Gallery() {
             <div key={i} className="group cursor-pointer">
               <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-4 bg-slate-900 border border-slate-800">
                 <img 
-                   src={`https://picsum.photos/seed/${item.seed}/600/800?blur=2`} 
+                   src={item.imageUrl} 
                    alt={item.name}
                    referrerPolicy="no-referrer"
                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100"
@@ -602,7 +602,7 @@ function PricingAndContact() {
               <span className="text-xl text-slate-400 font-mono">MXN</span>
             </div>
             <p className="text-slate-400 text-lg mb-2">Inversión única por un activo que revoluciona tu networking.</p>
-            <p className="text-xs text-accent/80 font-mono tracking-wide uppercase">* Precio base estándar por Tarjeta + Perfil VCard</p>
+            <p className="text-xs text-accent/80 font-mono tracking-wide uppercase">* Precio base estándar por Tarjeta + Perfil Digital</p>
           </div>
 
           <ul className="space-y-4 mb-12">
@@ -621,12 +621,22 @@ function PricingAndContact() {
             ))}
           </ul>
           
-          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 relative overflow-hidden mb-4">
             <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent" />
             <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2"><Sparkles size={14} className="text-accent" /> ¿Quieres más funcionalidades?</h4>
             <p className="text-xs text-slate-400 leading-relaxed">
               Las integraciones avanzadas del ecosistema (Captura de Leads, Reviews, Pasarelas de Pago, Portafolios extendidos, Tótems, etc.) se cotizan a la medida según los requerimientos técnicos de tu marca. 
             </p>
+          </div>
+
+          <div className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 flex flex-col md:flex-row gap-4 items-center justify-between group hover:border-white/10 transition-colors">
+            <div>
+              <h4 className="text-sm font-medium text-white mb-1">¿Tarjetas para un equipo de trabajo?</h4>
+              <p className="text-xs text-slate-400">Escala TIPAZO para toda tu organización.</p>
+            </div>
+            <a href="#contacto" className="text-xs font-mono tracking-wider uppercase bg-white text-black px-4 py-2 rounded-full hover:bg-slate-200 transition-colors whitespace-nowrap">
+              Soluciones Corporativas
+            </a>
           </div>
         </div>
         
