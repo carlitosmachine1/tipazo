@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
-import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link } from 'lucide-react';
+import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link, Mouse, ChevronDown } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 
 function ParticleNetwork() {
@@ -176,17 +176,24 @@ function Hero() {
         >
           Perfiles digitales y tarjetas NFC/QR premium. Diseñadas a medida por especialistas. Nada genérico. Código de alto nivel para un perfil impecable.
         </motion.p>
-        
+      </motion.div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+        style={{ opacity }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500"
+      >
+        <span className="text-[10px] uppercase tracking-[0.4em] font-mono whitespace-nowrap">Conoce el producto</span>
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
-          className="pointer-events-auto"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <a href="#contacto" className="inline-flex items-center gap-3 bg-white text-black px-8 py-4 rounded-full font-medium hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.3)] transition-all duration-300">
-            Obtén tu tarjeta ahora <ArrowRight size={18} />
-          </a>
+          <Mouse size={20} strokeWidth={1.5} />
         </motion.div>
+        <ChevronDown size={14} className="animate-pulse" />
       </motion.div>
     </section>
   );
@@ -406,6 +413,24 @@ function HostingOptions() {
             </div>
           </motion.div>
         </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="mt-20 text-center"
+        >
+          <div className="inline-block px-10 py-5 rounded-[2rem] bg-white/[0.02] border border-white/5 backdrop-blur-md relative group overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent/0 via-accent/5 to-accent/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+            <p className="text-slate-400 text-sm md:text-base italic relative z-10">
+              ¿Quieres tu dominio y no lo tienes? <span className="text-accent underline underline-offset-4 decoration-accent/30 font-medium">te ayudamos a conseguir tu dominio ideal</span>
+            </p>
+            <div className="mt-2 text-[10px] uppercase tracking-[0.4em] text-white/20 font-mono relative z-10">
+              No tenemos límites
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
