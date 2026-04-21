@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
-import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link, Mouse, ChevronDown } from 'lucide-react';
+import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link, Mouse, ChevronDown, Contact, Star, Users, Calendar, Image as ImageIcon, FileText, Wifi, Tag, Smartphone } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 
 function ParticleNetwork() {
@@ -353,6 +353,103 @@ function Features() {
   );
 }
 
+function Ecosystem() {
+  const functions = [
+    { icon: <Contact size={20}/>, title: "vCard Instantánea", desc: "Guarda tu contacto directo a la agenda en 1 clic." },
+    { icon: <Star size={20}/>, title: "Google Reviews", desc: "Detona reseñas de 5 estrellas al instante en tu local." },
+    { icon: <Users size={20}/>, title: "Captura de Leads", desc: "Formularios integrados para recibir datos de prospectos." },
+    { icon: <Calendar size={20}/>, title: "Agendamiento Activo", desc: "Tus clientes reservan citas o demos sin fricción." },
+    { icon: <ImageIcon size={20}/>, title: "Portafolio Showcase", desc: "Exhibe proyectos, videos o fotografía en alta calidad." },
+    { icon: <CreditCard size={20}/>, title: "Cobros y Facturación", desc: "Enlaces de pago seguros y constancia fiscal a la mano." },
+    { icon: <MapPin size={20}/>, title: "Navegación GPS", desc: "Comienza la ruta hacia tu oficina automáticamente." },
+    { icon: <Globe size={20}/>, title: "Catálogos Interactivos", desc: "Menús o inventarios actualizables desde la nube." },
+    { icon: <FileText size={20}/>, title: "Distribución Segura", desc: "Comparte Pitch Decks o CVs con alto nivel corporativo." },
+    { icon: <Wifi size={20}/>, title: "Accesos y VIP", desc: "Conexión a WiFi automática y entrega de cupones." }
+  ];
+
+  return (
+    <section className="py-32 px-6 relative border-t border-white/5">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.02)_0%,transparent_70%)] pointer-events-none" />
+      <div className="max-w-7xl mx-auto relative z-10">
+        
+        <div className="text-center mb-16">
+          <span className="text-accent uppercase tracking-[0.2em] text-[10px] font-mono mb-4 block">Nuestra tecnología no tiene límites</span>
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-6">Un chip. Posibilidades infinitas.</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+            No es solo información de contacto. Diseñamos experiencias específicas y herramientas profesionales detonadas por un solo toque.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-24">
+          {functions.map((f, i) => (
+            <motion.div 
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05 }}
+              className="bg-dark-card/50 border border-white/5 rounded-2xl p-6 hover:bg-white/[0.02] hover:border-accent/30 transition-all group"
+            >
+              <div className="text-accent mb-4 bg-accent/10 w-10 h-10 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                {f.icon}
+              </div>
+              <h4 className="text-white text-sm font-medium mb-2">{f.title}</h4>
+              <p className="text-slate-500 text-xs leading-relaxed">{f.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-gradient-to-r from-slate-900 to-dark-bg border border-slate-800 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12 group hover:border-slate-700 transition-colors"
+        >
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-[radial-gradient(ellipse_at_center,rgba(0,229,255,0.05)_0%,transparent_70%)] pointer-events-none" />
+          
+          <div className="max-w-xl relative z-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 text-slate-300 text-[10px] font-mono mb-6 uppercase tracking-widest">
+              <Cpu size={12} className="text-accent" /> El ecosistema TIPAZO
+            </div>
+            <h3 className="text-2xl md:text-3xl font-display font-medium mb-4 text-white">Más allá de la tarjeta de presentación</h3>
+            <p className="text-slate-400 text-sm md:text-base leading-relaxed">
+              Llevamos esta tecnología a cualquier entorno. Adaptamos nuestro chip en <span className="text-white font-medium">Tags adhesivos, llaveros premium, tótems corporativos, mostradores interactivos y pulseras inteligentes</span>. Imagina tu negocio operando en el futuro.
+            </p>
+          </div>
+          
+          <div className="flex-shrink-0 relative z-10 flex gap-4 text-slate-400 flex-wrap justify-center">
+            <div className="w-16 h-16 rounded-2xl border border-white/10 bg-dark-bg/50 flex flex-col items-center justify-center gap-1 group-hover:border-accent/30 transition-colors">
+              <Tag size={20} className="text-accent" />
+              <span className="text-[9px] uppercase tracking-wider font-mono">Tags</span>
+            </div>
+            <div className="w-16 h-16 rounded-2xl border border-white/10 bg-dark-bg/50 flex flex-col items-center justify-center gap-1 group-hover:border-accent/30 transition-colors">
+              <CreditCard size={20} className="text-accent" />
+              <span className="text-[9px] uppercase tracking-wider font-mono">Cards</span>
+            </div>
+            <div className="w-16 h-16 rounded-2xl border border-white/10 bg-dark-bg/50 flex flex-col items-center justify-center gap-1 group-hover:border-accent/30 transition-colors">
+              <Smartphone size={20} className="text-accent" />
+              <span className="text-[9px] uppercase tracking-wider font-mono">Tótems</span>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-8 text-center"
+        >
+          <p className="text-slate-500 text-xs md:text-sm italic">
+            *Las funciones avanzadas descritas en esta sección representan integraciones posibles con nuestra tecnología NFC y se desarrollan sobre diseño y cotización a la medida.<br className="hidden md:block" /> 
+            <a href="#contacto" className="text-accent underline underline-offset-4 decoration-accent/30 font-medium hover:text-white transition-colors">Contáctanos para expandir las posibilidades</a> de tu proyecto.
+          </p>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+
 function HostingOptions() {
   return (
     <section className="py-32 px-6 bg-dark-card/30 relative">
@@ -376,7 +473,7 @@ function HostingOptions() {
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 border border-blue-500/20">
                 <Link size={28} className="text-blue-400" />
               </div>
-              <h3 className="text-2xl font-display font-medium mb-4 italic text-white tracking-tight">tipazo.info/usuario</h3>
+              <h3 className="text-2xl font-display font-medium mb-4 italic text-white tracking-tight">tipazo.info/tu-nombre</h3>
               <p className="text-slate-400 leading-relaxed mb-6">
                 <strong>¿No tienes dominio propio?</strong> No te preocupes. Nosotros nos encargamos de todo. Hospedamos tu perfil en nuestra plataforma de alta velocidad bajo nuestra propia URL.
               </p>
@@ -499,17 +596,18 @@ function PricingAndContact() {
           </div>
           <h2 className="text-4xl md:text-6xl font-display font-medium tracking-tight mb-8">Nivel Premium, <br />Precio Transparente.</h2>
           
-          <div className="mb-12">
-            <div className="flex items-baseline gap-2 mb-4">
+          <div className="mb-10">
+            <div className="flex items-baseline gap-2 mb-2">
               <span className="text-5xl md:text-6xl font-bold font-display tracking-tighter">$1,000</span>
               <span className="text-xl text-slate-400 font-mono">MXN</span>
             </div>
-            <p className="text-slate-400 text-lg">Inversión única por un activo que revoluciona tu networking.</p>
+            <p className="text-slate-400 text-lg mb-2">Inversión única por un activo que revoluciona tu networking.</p>
+            <p className="text-xs text-accent/80 font-mono tracking-wide uppercase">* Precio base estándar por Tarjeta + Perfil VCard</p>
           </div>
 
           <ul className="space-y-4 mb-12">
             {[
-              "Diseño de perfil digital por especialista",
+              "Diseño de perfil digital (Contacto VCard) por especialista",
               "Diseño de tarjeta física personalizada",
               "Tarjeta física premium con chip NFC interno",
               "Impresión de alta precisión con código QR",
@@ -522,6 +620,14 @@ function PricingAndContact() {
               </li>
             ))}
           </ul>
+          
+          <div className="bg-slate-900/50 border border-slate-800 rounded-2xl p-6 relative overflow-hidden">
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent" />
+            <h4 className="text-sm font-medium text-white mb-2 flex items-center gap-2"><Sparkles size={14} className="text-accent" /> ¿Quieres más funcionalidades?</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Las integraciones avanzadas del ecosistema (Captura de Leads, Reviews, Pasarelas de Pago, Portafolios extendidos, Tótems, etc.) se cotizan a la medida según los requerimientos técnicos de tu marca. 
+            </p>
+          </div>
         </div>
         
         <div className="bg-dark-bg p-8 md:p-12 rounded-[2.5rem] border border-white/10 shadow-2xl">
@@ -616,6 +722,7 @@ export default function App() {
         <Hero />
         <SpinningCardSection />
         <Features />
+        <Ecosystem />
         <HostingOptions />
         <Gallery />
         <PricingAndContact />
