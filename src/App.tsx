@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
-import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe } from 'lucide-react';
+import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
 
 function ParticleNetwork() {
@@ -271,9 +271,9 @@ function Features() {
       description: "Edita, agrega o elimina información en cualquier momento. Tu perfil se actualiza al instante sin necesidad de imprimir una nueva tarjeta."
     },
     {
-      icon: <Globe size={24} className="text-accent" />,
-      title: "Dominio Marca Blanca",
-      description: "Tu perfil en tupagina.com/cliente o subdominios. Subes un solo archivo a tu hosting y nosotros manejamos la plataforma detrás."
+      icon: <ShieldCheck size={24} className="text-accent" />,
+      title: "Seguridad y Velocidad",
+      description: "Infraestructura robusta que garantiza que tu perfil cargue al instante y esté siempre disponible cuando más lo necesites."
     },
     {
       icon: <PenTool size={24} className="text-accent" />,
@@ -340,6 +340,71 @@ function Features() {
               <p className="text-sm text-slate-400 leading-relaxed font-light">{feature.description}</p>
             </motion.div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HostingOptions() {
+  return (
+    <section className="py-32 px-6 bg-dark-card/30 relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight mb-4">Flexibilidad de Alojamiento</h2>
+          <p className="text-slate-400 max-w-2xl mx-auto">Tú decides dónde reside tu identidad digital. Ofrecemos opciones que se adaptan a tu infraestructura actual.</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-dark-bg border border-white/5 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-accent/30 transition-colors"
+          >
+            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Server size={120} />
+            </div>
+            <div className="relative z-10">
+              <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-8 border border-blue-500/20">
+                <Link size={28} className="text-blue-400" />
+              </div>
+              <h3 className="text-2xl font-display font-medium mb-4 italic text-white tracking-tight">tipazo.info/usuario</h3>
+              <p className="text-slate-400 leading-relaxed mb-6">
+                <strong>¿No tienes dominio propio?</strong> No te preocupes. Nosotros nos encargamos de todo. Hospedamos tu perfil en nuestra plataforma de alta velocidad bajo nuestra propia URL.
+              </p>
+              <ul className="space-y-3 text-sm text-slate-500 italic">
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Configuración instantánea</li>
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Sin costos de hosting adicionales</li>
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Mantenimiento técnico incluido</li>
+              </ul>
+            </div>
+          </motion.div>
+
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-dark-bg border border-white/5 p-10 rounded-[2.5rem] relative overflow-hidden group hover:border-accent/30 transition-colors"
+          >
+            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 transition-opacity">
+              <Globe size={120} />
+            </div>
+            <div className="relative z-10">
+              <div className="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-8 border border-accent/20">
+                <HardDrive size={28} className="text-accent" />
+              </div>
+              <h3 className="text-2xl font-display font-medium mb-4 italic text-white tracking-tight">tudominio.com/tu-nombre</h3>
+              <p className="text-slate-400 leading-relaxed mb-6">
+                <strong>Manten tu identidad corporativa.</strong> Instalamos tu perfil directamente en tu propio dominio. Proyecta una imagen 100% profesional sin que tus clientes abandonen tu ecosistema.
+              </p>
+              <ul className="space-y-3 text-sm text-slate-500 italic">
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Solo requiere subir un archivo JSON/HTML</li>
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> Control total sobre el branding</li>
+                <li className="flex items-center gap-2"><Check size={14} className="text-accent" /> No dependes de URL externas</li>
+              </ul>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -526,6 +591,7 @@ export default function App() {
         <Hero />
         <SpinningCardSection />
         <Features />
+        <HostingOptions />
         <Gallery />
         <PricingAndContact />
       </main>
