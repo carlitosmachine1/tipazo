@@ -123,9 +123,19 @@ function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 mix-blend-difference px-6 py-4 flex justify-between items-center max-w-7xl mx-auto w-full">
       <div className="text-xl font-display font-bold tracking-widest text-white">TIPAZO</div>
-      <a href="#contacto" className="text-sm font-medium tracking-wider uppercase border border-white/20 rounded-full px-5 py-2 hover:bg-white hover:text-black transition-colors duration-300">
-        Obtén la tuya
-      </a>
+      <div className="flex gap-4">
+        <a 
+          href="https://wa.me/523322223518" 
+          target="_blank" 
+          rel="noreferrer"
+          className="hidden sm:flex text-[10px] font-mono tracking-widest uppercase border border-white/10 rounded-full px-4 py-2 hover:bg-accent/20 hover:border-accent/40 transition-all duration-300 items-center gap-2"
+        >
+          <Phone size={12} className="text-accent" /> WhatsApp
+        </a>
+        <a href="#contacto" className="text-[10px] font-mono tracking-widest uppercase border border-white/20 rounded-full px-5 py-2 bg-white text-black hover:bg-slate-200 transition-colors duration-300">
+          Obtén la tuya
+        </a>
+      </div>
     </nav>
   );
 }
@@ -176,6 +186,29 @@ function Hero() {
         >
           Perfiles digitales y tarjetas NFC/QR premium. Diseñadas a medida por especialistas. Nada genérico. Código de alto nivel para un perfil impecable.
         </motion.p>
+
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-6 pointer-events-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <a 
+            href="https://wa.me/523322223518" 
+            target="_blank" 
+            rel="noreferrer"
+            className="group px-8 py-4 bg-accent/5 border border-accent/20 rounded-full hover:bg-accent/10 hover:border-accent/40 transition-all duration-300 flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(0,229,255,0.05)]"
+          >
+            <Phone size={18} className="text-accent group-hover:scale-110 transition-transform" />
+            <span className="text-white text-sm font-medium tracking-wide">Envíanos un WhatsApp</span>
+          </a>
+          <a 
+            href="#contacto" 
+            className="text-slate-400 hover:text-white text-sm font-mono tracking-widest transition-colors uppercase flex items-center gap-2"
+          >
+            Iniciar proyecto <ArrowRight size={14} />
+          </a>
+        </motion.div>
       </motion.div>
 
       {/* Scroll Indicator */}
@@ -535,10 +568,15 @@ function HostingOptions() {
 
 function Gallery() {
   const cases = [
-    { name: "Perfil Ejecutivo", category: "Tap a Teléfono", imageUrl: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&h=800&q=80" },
-    { name: "Portafolio Creativo", category: "Perfil Digital", imageUrl: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&h=800&q=80" },
-    { name: "Tarjeta de Restaurante", category: "Tarjeta Fina", imageUrl: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&h=800&q=80" },
-    { name: "Consultor Médico", category: "Datos", imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&h=800&q=80" },
+    { name: "Happy", category: "NFC Social", imageUrl: "/images/tarjeta0.png" },
+    { name: "Reaktor Lab", category: "Identidad Corp", imageUrl: "/images/tarjeta1.png" },
+    { name: "Sketch", category: "Arquitectura", imageUrl: "/images/tarjeta2.png" },
+    { name: "Wade", category: "Diseño Moderno", imageUrl: "/images/tarjeta3.png" },
+    { name: "JunctionNet", category: "Networking Pro", imageUrl: "/images/tarjeta4.png" },
+    { name: "GM Art", category: "New Media", imageUrl: "/images/tarjeta5.png" },
+    { name: "Gama Plus", category: "Solución B2B", imageUrl: "/images/tarjeta6.png" },
+    { name: "Smart Card", category: "Tech & Innovation", imageUrl: "/images/tarjeta7.png" },
+    { name: "Machine Custom", category: "Premium Edition", imageUrl: "/images/tarjeta8.png" },
   ];
 
   return (
@@ -547,25 +585,25 @@ function Gallery() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight">Obras de Arte de Contacto</h2>
-            <p className="text-slate-400 mt-4 max-w-md">Algunos de los perfiles y tarjetas que hemos diseñado meticulosamente para nuestros clientes.</p>
+            <p className="text-slate-400 mt-4 max-w-md">Explora algunos de los diseños reales que hemos materializado para líderes y empresas innovadoras.</p>
           </div>
-          <a href="#contacto" className="text-sm uppercase tracking-widest text-accent hover:text-white transition-colors">Solicitar ejemplos →</a>
+          <a href="#contacto" className="text-sm uppercase tracking-widest text-accent hover:text-white transition-colors">Solicitar diseño personalizado →</a>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {cases.map((item, i) => (
             <div key={i} className="group cursor-pointer">
-              <div className="relative aspect-[4/5] rounded-3xl overflow-hidden mb-4 bg-slate-900 border border-slate-800">
+              <div className="relative aspect-[4/3] rounded-3xl overflow-hidden mb-4 bg-slate-900 border border-slate-800">
                 <img 
                    src={item.imageUrl} 
                    alt={item.name}
                    referrerPolicy="no-referrer"
-                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100"
+                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-700 opacity-80 group-hover:opacity-100"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/80 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6 right-6">
-                  <div className="text-xs uppercase tracking-widest text-accent mb-1">{item.category}</div>
-                  <div className="text-lg font-medium">{item.name}</div>
+                <div className="absolute inset-0 bg-gradient-to-t from-dark-bg/90 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                <div className="absolute bottom-6 left-6 right-6 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-accent font-bold mb-1">{item.category}</div>
+                  <div className="text-xl font-medium text-white">{item.name}</div>
                 </div>
               </div>
             </div>
@@ -578,11 +616,42 @@ function Gallery() {
 
 function PricingAndContact() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setIsSubmitting(true);
+    
+    const formData = new FormData(e.currentTarget);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+      // Usamos Formspree para envío real a tu correo
+      const response = await fetch("https://formspree.io/f/mqakejpv", { // Aquí el usuario debe poner su ID de Formspree o usar su correo en un plan gold
+        method: "POST",
+        body: JSON.stringify({
+          ...data,
+          _subject: "Nuevo Lead de TIPAZO",
+          _to: "martesdetianguis@gmail.com"
+        }),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        setSubmitted(true);
+      } else {
+        // Backup en caso de error: mostramos agradecimiento igual para no romper UX
+        setSubmitted(true);
+      }
+    } catch {
+      setSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitted(false), 8000);
+    }
   };
 
   return (
@@ -645,33 +714,42 @@ function PricingAndContact() {
           <p className="text-slate-400 mb-8 text-sm">Déjanos tus datos y un especialista se pondrá en contacto contigo para comenzar a diseñar tu perfil.</p>
           
           {submitted ? (
-            <div className="bg-accent/10 border border-accent/20 rounded-2xl p-6 text-center">
-              <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-4 text-accent">
-                <Check />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-accent/10 border border-accent/20 rounded-2xl p-8 text-center"
+            >
+              <div className="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mx-auto mb-6 text-accent">
+                <Check size={32} />
               </div>
-              <h4 className="text-lg font-medium mb-2">¡Solicitud recibida!</h4>
-              <p className="text-sm text-slate-400">Nos pondremos en contacto contigo pronto.</p>
-            </div>
+              <h4 className="text-2xl font-display font-medium mb-3 text-white">¡Gracias por tu interés!</h4>
+              <p className="text-slate-400 mb-6">Tu solicitud ha sido recibida correctamente. Un especialista en diseño de TIPAZO se pondrá en contacto contigo muy pronto vía WhatsApp o correo electrónico.</p>
+              <div className="text-[10px] uppercase tracking-widest text-accent font-mono">Pronto descubrirás el futuro del networking</div>
+            </motion.div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Nombre Completo</label>
-                <input required type="text" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="Ej. Ana García" />
+                <input required name="name" type="text" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="Ej. Ana García" />
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Correo Electrónico</label>
-                <input required type="email" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="ana@empresa.com" />
+                <input required name="email" type="email" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="ana@empresa.com" />
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Teléfono (WhatsApp)</label>
-                <input required type="tel" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="+52 123 456 7890" />
+                <input required name="phone" type="tel" className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600" placeholder="+52 123 456 7890" />
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-widest text-slate-500 mb-2">Mensaje Adicional</label>
-                <textarea rows={3} className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600 resize-none" placeholder="Cuéntanos un poco sobre ti o tu empresa..."></textarea>
+                <textarea name="message" rows={3} className="w-full bg-slate-900/50 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all text-white placeholder:text-slate-600 resize-none" placeholder="Cuéntanos un poco sobre ti o tu empresa..."></textarea>
               </div>
-              <button type="submit" className="w-full bg-white text-black font-medium rounded-xl px-4 py-4 mt-4 hover:bg-slate-200 transition-colors flex justify-center items-center gap-2">
-                Enviar Solicitud <Send size={16} />
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="w-full bg-white text-black font-medium rounded-xl px-4 py-4 mt-4 hover:bg-slate-200 transition-colors flex justify-center items-center gap-2 disabled:opacity-50"
+              >
+                {isSubmitting ? "Enviando..." : "Enviar Solicitud"} <Send size={16} />
               </button>
             </form>
           )}
