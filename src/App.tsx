@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { CreditCard, Leaf, PenTool, Sparkles, Send, MapPin, Phone, ArrowRight, ShieldCheck, Cpu, Check, RefreshCcw, Globe, Server, HardDrive, Link, Mouse, ChevronDown, Contact, Star, Users, Calendar, Image as ImageIcon, FileText, Wifi, Tag, Smartphone } from 'lucide-react';
 import React, { useRef, useState, useEffect } from 'react';
+import { Analytics } from "@vercel/analytics/react";
 
 function ParticleNetwork() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -816,6 +817,7 @@ export default function App() {
         <PricingAndContact />
       </main>
       <Footer />
+      <Analytics />
     </div>
   );
 }
