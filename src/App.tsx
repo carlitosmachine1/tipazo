@@ -572,7 +572,7 @@ function Gallery() {
     { name: "Happy", category: "NFC Social", imageUrl: "/images/tarjeta0.png" },
     { name: "Reaktor Lab", category: "Identidad Corp", imageUrl: "/images/tarjeta1.png" },
     { name: "Sketch", category: "Arquitectura", imageUrl: "/images/tarjeta2.png" },
-    { name: "Wade", category: "Diseño Moderno", imageUrl: "/images/tarjeta3.png" },
+    { name: "MADE", category: "Arquitectura Moderna", imageUrl: "/images/tarjeta3.png" },
     { name: "JunctionNet", category: "Networking Pro", imageUrl: "/images/tarjeta4.png" },
     { name: "GM Art", category: "New Media", imageUrl: "/images/tarjeta5.png" },
     { name: "Gama Plus", category: "Solución B2B", imageUrl: "/images/tarjeta6.png" },
@@ -628,12 +628,11 @@ function PricingAndContact() {
 
     try {
       // Usamos Formspree para envío real a tu correo
-      const response = await fetch("https://formspree.io/f/mqakejpv", { // Aquí el usuario debe poner su ID de Formspree o usar su correo en un plan gold
+      const response = await fetch("https://formsubmit.co/ajax/martesdetianguis@gmail.com", {
         method: "POST",
         body: JSON.stringify({
           ...data,
-          _subject: "Nuevo Lead de TIPAZO",
-          _to: "martesdetianguis@gmail.com"
+          _subject: "Nuevo Lead de TIPAZO"
         }),
         headers: {
           'Accept': 'application/json',
